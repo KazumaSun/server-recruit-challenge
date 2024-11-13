@@ -26,11 +26,17 @@ func NewRouter(
 	singerService := service.NewSingerService(singerRepo)
 	singerController := controller.NewSingerController(singerService)
 
+	albumRepo := mysqldb.NewAlbumRepository(dbClient)
+	albumService := service.NewAlbumService(albumRepo)
+	albumController := controller.NewAlbumController(albumService)
+
 	mux := mux.NewRouter()
 	mux.HandleFunc("/singers", singerController.GetSingerListHandler).Methods("GET")
 	mux.HandleFunc("/singers/{id}", singerController.GetSingerDetailHandler).Methods("GET")
 	mux.HandleFunc("/singers", singerController.PostSingerHandler).Methods("POST")
 	mux.HandleFunc("/singers/{id}", singerController.DeleteSingerHandler).Methods("DELETE")
+
+	mux.HandleFunc("/albums", albumController.GetAlbumListHandler).Methods("GET")
 
 	wrappedMux := middleware.LoggingMiddleware(mux)
 
