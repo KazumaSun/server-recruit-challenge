@@ -11,7 +11,7 @@ type Album struct {
 type AlbumDetail struct {
 	ID       AlbumID  `json:"id"`
 	Title    string   `json:"title"`
-	Singer 	 Singer `json:"singer"` // モデル Singer と紐づきます
+	Singer 	 Singer 	`json:"singer"` // モデル Singer と紐づきます
 }
 
 func (a *Album) Validate() error {
